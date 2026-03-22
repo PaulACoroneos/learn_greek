@@ -40,7 +40,7 @@ Keep responses encouraging and educational.`
 export const sendChatMessage = createServerFn({ method: 'POST' })
   .inputValidator((data: ChatInput) => data)
   .handler(async ({ data }) => {
-    const client = new Anthropic()
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
     const systemPrompt = buildSystemPrompt(data.mode, data.knownWords)
     const response = await client.messages.create({
       model: 'claude-opus-4-5',
