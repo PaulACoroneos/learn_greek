@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
-import WordBubbles from '../../components/WordBubbles/WordBubbles'
+import WordBubbles from '../../../app/components/WordBubbles/WordBubbles'
 
 const PROPS = {
   prompt: 'Good morning',

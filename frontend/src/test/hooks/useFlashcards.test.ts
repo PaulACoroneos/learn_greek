@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
-import { useFlashcards } from '../../hooks/useFlashcards'
+import { useFlashcards } from '../../../app/hooks/useFlashcards'
 
 const lsMock = (() => {
   let store: Record<string, string> = {}

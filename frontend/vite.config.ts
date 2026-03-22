@@ -1,15 +1,14 @@
-/// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { tanstackStart } from '@tanstack/react-start/plugin/vite'
+import tsConfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
 
-// https://vite.dev/config/
 export default defineConfig({
-  base: '/learn_greek/',
-  plugins: [react(), tailwindcss()],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
-  },
+  plugins: [
+    tsConfigPaths(),
+    tailwindcss(),
+    tanstackStart({
+      srcDirectory: 'app',
+    }),
+  ],
 })

@@ -1,4 +1,4 @@
-name: Deploy Frontend to GitHub Pages
+name: Deploy Frontend
 
 on:
   push:
@@ -8,14 +8,14 @@ on:
       - '.github/workflows/deploy-frontend.yml'
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
+# NOTE: TanStack Start with server functions requires a Node.js server runtime.
+# GitHub Pages (static hosting) cannot run server functions (Anthropic API calls).
+# Deploy to a Node.js-capable platform such as:
+#   - Vercel (recommended: zero-config TanStack Start support)
+#   - Railway
+#   - Render
+#   - Fly.io
+# See: https://tanstack.com/start/latest/docs/framework/react/hosting
 
 jobs:
   build:
@@ -54,22 +54,14 @@ jobs:
         working-directory: frontend
         run: pnpm test
 
+      - name: Typecheck
+        working-directory: frontend
+        run: pnpm typecheck
+
       - name: Build
         working-directory: frontend
         run: pnpm build
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: frontend/dist
-
-  deploy:
-    name: Deploy
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        # Build artifact is in frontend/dist/
+        # Client assets: dist/client/
+        # Server entry: dist/server/server.js
+        # To deploy, upload dist/ to your Node.js hosting provider.

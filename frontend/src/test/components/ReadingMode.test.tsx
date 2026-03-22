@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
-import ReadingMode from '../../components/ReadingMode/ReadingMode'
-import type { ReadingWord } from '../../types'
+import ReadingMode from '../../../app/components/ReadingMode/ReadingMode'
+import type { ReadingWord } from '../../../app/types'
 
 const WORDS: ReadingWord[] = [
   { id: 'w1', greek: 'Καλημέρα!', english: 'Good morning!', isKnown: false },

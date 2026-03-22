@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
-import Flashcards from '../../components/Flashcards/Flashcards'
-import type { Flashcard } from '../../types'
+import Flashcards from '../../../app/components/Flashcards/Flashcards'
+import type { Flashcard } from '../../../app/types'
 
 const CARDS: Flashcard[] = [
   { id: '1', greek: 'Γεια', english: 'Hello', transliteration: 'Yia', addedAt: '2024-01-01T00:00:00Z', reviewCount: 0 },

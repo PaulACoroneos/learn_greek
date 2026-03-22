@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import FreeTyping from '../../components/FreeTyping/FreeTyping'
+import FreeTyping from '../../../app/components/FreeTyping/FreeTyping'
 
 const PROPS = {
   prompt: 'Hello',
