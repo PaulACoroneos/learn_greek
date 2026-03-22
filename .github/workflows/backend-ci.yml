@@ -1,0 +1,42 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci.yml'
+
+jobs:
+  ci:
+    name: Lint & Test Backend
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: latest
+
+      - name: Install dependencies
+        working-directory: backend
+        run: uv sync --all-groups
+
+      - name: Lint with ruff
+        working-directory: backend
+        run: uv run ruff check .
+
+      - name: Run tests
+        working-directory: backend
+        run: uv run pytest tests/ -v --tb=short
