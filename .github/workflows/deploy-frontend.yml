@@ -1,0 +1,67 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/deploy-frontend.yml'
+  workflow_dispatch:
+
+# NOTE: TanStack Start with server functions requires a Node.js server runtime.
+# GitHub Pages (static hosting) cannot run server functions (Anthropic API calls).
+# Deploy to a Node.js-capable platform such as:
+#   - Vercel (recommended: zero-config TanStack Start support)
+#   - Railway
+#   - Render
+#   - Fly.io
+# See: https://tanstack.com/start/latest/docs/framework/react/hosting
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: false
+
+      - name: Get pnpm store path
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        working-directory: frontend
+        run: pnpm lint
+
+      - name: Test
+        working-directory: frontend
+        run: pnpm test
+
+      - name: Typecheck
+        working-directory: frontend
+        run: pnpm typecheck
+
+      - name: Build
+        working-directory: frontend
+        run: pnpm build
+        # Build artifact is in frontend/dist/
+        # Client assets: dist/client/
+        # Server entry: dist/server/server.js
+        # To deploy, upload dist/ to your Node.js hosting provider.
