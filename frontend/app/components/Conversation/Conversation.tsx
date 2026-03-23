@@ -84,8 +84,7 @@ export default function Conversation({ onAddFlashcard }: Props) {
         role: m.role as 'user' | 'assistant',
         content: m.content,
       }))
-      const knownWords =
-        mode === 'sentence-gen' ? flashcards.map((fc) => fc.greek) : undefined
+      const knownWords = mode === 'sentence-gen' ? flashcards.map((fc) => fc.greek) : undefined
 
       const result = await sendChatMessage({
         data: { messages: apiMessages, mode, knownWords },

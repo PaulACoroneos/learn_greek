@@ -31,7 +31,9 @@ export default function ReadingMode({ title, words, onAddFlashcard }: Props) {
   return (
     <div className="space-y-5 relative">
       <h2 className="text-xl font-bold text-gray-800">{title}</h2>
-      <p className="text-sm text-gray-500">Click any word you don't know to define it or add it to flashcards.</p>
+      <p className="text-sm text-gray-500">
+        Click any word you don't know to define it or add it to flashcards.
+      </p>
 
       <div className="bg-white rounded-xl p-6 shadow-sm border border-blue-100 leading-loose text-xl">
         {states.map((word, i) => (
@@ -60,20 +62,36 @@ export default function ReadingMode({ title, words, onAddFlashcard }: Props) {
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-3xl font-bold text-blue-700">{selected.greek}</p>
-                {selected.english && <p className="text-gray-600 mt-1 text-lg">{selected.english}</p>}
+                {selected.english && (
+                  <p className="text-gray-600 mt-1 text-lg">{selected.english}</p>
+                )}
               </div>
-              <button onClick={() => setSelected(null)} className="text-gray-400 hover:text-gray-600 text-xl ml-4" aria-label="Close">✕</button>
+              <button
+                onClick={() => setSelected(null)}
+                className="text-gray-400 hover:text-gray-600 text-xl ml-4"
+                aria-label="Close"
+              >
+                ✕
+              </button>
             </div>
             <div className="flex gap-3 flex-wrap">
               {selected.english && !added.has(selected.id) && (
-                <button onClick={() => handleAdd(selected)} className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700">
+                <button
+                  onClick={() => handleAdd(selected)}
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700"
+                >
                   + Add to Flashcards
                 </button>
               )}
               {added.has(selected.id) && (
-                <span className="flex-1 text-center px-4 py-2 bg-green-50 text-green-600 rounded-full text-sm font-medium border border-green-200">✓ In Flashcards</span>
+                <span className="flex-1 text-center px-4 py-2 bg-green-50 text-green-600 rounded-full text-sm font-medium border border-green-200">
+                  ✓ In Flashcards
+                </span>
               )}
-              <button onClick={() => markKnown(selected)} className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200">
+              <button
+                onClick={() => markKnown(selected)}
+                className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200"
+              >
                 I know this
               </button>
             </div>

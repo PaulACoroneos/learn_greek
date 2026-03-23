@@ -12,7 +12,13 @@ function normalize(s: string) {
   return s.trim().toLowerCase()
 }
 
-export default function FreeTyping({ prompt, promptTranslation, expectedAnswer, hint, onComplete }: Props) {
+export default function FreeTyping({
+  prompt,
+  promptTranslation,
+  expectedAnswer,
+  hint,
+  onComplete,
+}: Props) {
   const [input, setInput] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [correct, setCorrect] = useState<boolean | null>(null)

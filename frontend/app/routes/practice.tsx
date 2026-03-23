@@ -191,7 +191,10 @@ function PracticePage() {
           <p className="text-5xl mb-4">🎉</p>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Session Complete!</h2>
           <p className="text-gray-500 text-lg mb-6">
-            You got <span className="text-blue-600 font-bold">{score.correct}/{score.total}</span>{' '}
+            You got{' '}
+            <span className="text-blue-600 font-bold">
+              {score.correct}/{score.total}
+            </span>{' '}
             correct
           </p>
           <button

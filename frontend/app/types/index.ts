@@ -33,4 +33,10 @@ export interface ReadingWord {
   isKnown: boolean
 }
 
-export type AIMode = 'conversation' | 'grammar' | 'transliteration' | 'sentence-gen' | 'socratic' | 'reading'
+export type AIMode =
+  | 'conversation'
+  | 'grammar'
+  | 'transliteration'
+  | 'sentence-gen'
+  | 'socratic'
+  | 'reading'

@@ -132,9 +132,7 @@ function ReadingPage() {
         data: { passage: passage!.greekText, word: token.text },
       })
       setTokens((prev) =>
-        prev.map((t) =>
-          t.id === token.id ? { ...t, explanation: result, state: 'explained' } : t
-        )
+        prev.map((t) => (t.id === token.id ? { ...t, explanation: result, state: 'explained' } : t))
       )
     } catch {
       // leave explanation null — show a fallback message
@@ -177,7 +175,13 @@ function ReadingPage() {
           ],
         },
       })
-      setComprehensionMsgs([{ id: `${Date.now()}-${Math.random().toString(36).slice(2)}`, role: 'assistant', content: result.content }])
+      setComprehensionMsgs([
+        {
+          id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+          role: 'assistant',
+          content: result.content,
+        },
+      ])
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to start comprehension.')
       setPhase('reading')
@@ -209,7 +213,11 @@ function ReadingPage() {
       const result = await sendChatMessage({ data: { mode: 'reading', messages: apiMessages } })
       setComprehensionMsgs((prev) => [
         ...prev,
-        { id: `${Date.now()}-${Math.random().toString(36).slice(2)}`, role: 'assistant', content: result.content },
+        {
+          id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+          role: 'assistant',
+          content: result.content,
+        },
       ])
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to send reply.')
