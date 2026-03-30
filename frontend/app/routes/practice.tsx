@@ -72,7 +72,7 @@ function PracticePage() {
   const [ftScore, setFtScore] = useState({ correct: 0, total: 0 })
 
   const { addFlashcard } = useFlashcards()
-  const { progress, recordAnswer } = useProgress()
+  const { progress, recordAnswer, hydrated } = useProgress()
 
   const levelInfo = LEVEL_INFO[progress.currentLevel]
 
@@ -114,11 +114,11 @@ function PracticePage() {
   // Load first exercise once progress hydrates from localStorage
   const initialLoadDone = useRef(false)
   useEffect(() => {
-    if (mode === 'word-bubbles' && !initialLoadDone.current && progress.totalAnswered >= 0) {
+    if (mode === 'word-bubbles' && !initialLoadDone.current && hydrated) {
       initialLoadDone.current = true
       loadExercise(progress.currentLevel, [])
     }
-  }, [progress.currentLevel]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [hydrated]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function onWBComplete(correct: boolean, missed: string[]) {
     recordAnswer(correct, exercise?.correctWords ?? [])
