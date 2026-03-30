@@ -84,6 +84,11 @@ install_deps() {
 POSTGRES_STARTED=false
 
 start_postgres() {
+  if ! command -v systemctl &>/dev/null; then
+    warn "systemctl not found — skipping automatic PostgreSQL startup."
+    warn "Ensure PostgreSQL is running (e.g. via Docker, Postgres.app, or your system service manager)."
+    return
+  fi
   if systemctl is-active --quiet postgresql; then
     info "PostgreSQL already running."
   else

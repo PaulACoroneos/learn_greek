@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import WordBubbles from '../components/WordBubbles/WordBubbles'
 import FreeTyping from '../components/FreeTyping/FreeTyping'
 import { useFlashcards } from '../hooks/useFlashcards'
-import { useProgress } from '../hooks/useProgress'
+import { useProgress, LEVEL_UP_THRESHOLD } from '../hooks/useProgress'
 import { generateWordBubbleExercise, type ExerciseData } from '../server-fns/practice'
 import { LEVEL_INFO } from '../lib/levels'
 
@@ -158,7 +158,7 @@ function PracticePage() {
     if (!correct) FT_EXERCISES[ftIdx].missing.forEach((w) => addFlashcard(w.greek, w.english))
   }
 
-  const toNextLevel = Math.max(0, 3 - progress.consecutiveCorrect)
+  const toNextLevel = Math.max(0, LEVEL_UP_THRESHOLD - progress.consecutiveCorrect)
 
   return (
     <div className="space-y-6 max-w-2xl mx-auto">

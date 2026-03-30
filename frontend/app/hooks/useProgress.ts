@@ -19,6 +19,8 @@ export interface ProgressData {
 
 const STORAGE_KEY = 'learn-greek-progress'
 
+export const LEVEL_UP_THRESHOLD = 5
+
 const DEFAULT: ProgressData = {
   totalAnswered: 0,
   totalCorrect: 0,
