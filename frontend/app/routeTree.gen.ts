@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReadingRouteImport } from './routes/reading'
+import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as FlashcardsRouteImport } from './routes/flashcards'
 import { Route as ConversationRouteImport } from './routes/conversation'
@@ -18,6 +19,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const ReadingRoute = ReadingRouteImport.update({
   id: '/reading',
   path: '/reading',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PracticeRoute = PracticeRouteImport.update({
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/conversation': typeof ConversationRoute
   '/flashcards': typeof FlashcardsRoute
   '/practice': typeof PracticeRoute
+  '/progress': typeof ProgressRoute
   '/reading': typeof ReadingRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/conversation': typeof ConversationRoute
   '/flashcards': typeof FlashcardsRoute
   '/practice': typeof PracticeRoute
+  '/progress': typeof ProgressRoute
   '/reading': typeof ReadingRoute
 }
 export interface FileRoutesById {
@@ -61,19 +69,21 @@ export interface FileRoutesById {
   '/conversation': typeof ConversationRoute
   '/flashcards': typeof FlashcardsRoute
   '/practice': typeof PracticeRoute
+  '/progress': typeof ProgressRoute
   '/reading': typeof ReadingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/conversation' | '/flashcards' | '/practice' | '/reading'
+  fullPaths: '/' | '/conversation' | '/flashcards' | '/practice' | '/progress' | '/reading'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/conversation' | '/flashcards' | '/practice' | '/reading'
+  to: '/' | '/conversation' | '/flashcards' | '/practice' | '/progress' | '/reading'
   id:
     | '__root__'
     | '/'
     | '/conversation'
     | '/flashcards'
     | '/practice'
+    | '/progress'
     | '/reading'
   fileRoutesById: FileRoutesById
 }
@@ -82,6 +92,7 @@ export interface RootRouteChildren {
   ConversationRoute: typeof ConversationRoute
   FlashcardsRoute: typeof FlashcardsRoute
   PracticeRoute: typeof PracticeRoute
+  ProgressRoute: typeof ProgressRoute
   ReadingRoute: typeof ReadingRoute
 }
 
@@ -99,6 +110,13 @@ declare module '@tanstack/react-router' {
       path: '/practice'
       fullPath: '/practice'
       preLoaderRoute: typeof PracticeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/flashcards': {
@@ -130,6 +148,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConversationRoute: ConversationRoute,
   FlashcardsRoute: FlashcardsRoute,
   PracticeRoute: PracticeRoute,
+  ProgressRoute: ProgressRoute,
   ReadingRoute: ReadingRoute,
 }
 export const routeTree = rootRouteImport

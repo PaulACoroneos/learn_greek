@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useProgress } from '../hooks/useProgress'
-import { LEVEL_INFO } from './practice'
+import { LEVEL_INFO } from '../lib/levels'
 
 export const Route = createFileRoute('/progress')({
   component: ProgressPage,
