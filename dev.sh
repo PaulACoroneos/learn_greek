@@ -113,7 +113,7 @@ run_services() {
   FRONTEND_PID=$!
 
   # ── cleanup on exit ──────────────────────────────────────────────────────
-  trap 'info "Shutting down..."; kill $BACKEND_PID $FRONTEND_PID 2>/dev/null; stop_postgres; exit 0' INT TERM
+  trap 'status=$?; info "Shutting down..."; kill $BACKEND_PID $FRONTEND_PID 2>/dev/null || true; stop_postgres; exit $status' INT TERM EXIT HUP ERR
 
   wait $BACKEND_PID $FRONTEND_PID
 }
