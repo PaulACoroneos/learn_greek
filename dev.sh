@@ -29,7 +29,20 @@ check_tools() {
   if ! command -v pnpm &>/dev/null; then
     warn "pnpm not found, installing via corepack..."
     corepack enable
-    corepack prepare pnpm@latest --activate
+    PNPM_SPEC=""
+    if [ -f "$FRONTEND/package.json" ]; then
+      PACKAGE_MANAGER_FIELD="$(
+        cd "$FRONTEND" && node -p "require('./package.json').packageManager || ''" 2>/dev/null || echo ""
+      )"
+      PNPM_SPEC="$(printf '%s\n' "$PACKAGE_MANAGER_FIELD" | sed -n 's/^pnpm@//p')"
+    fi
+    if [ -n "$PNPM_SPEC" ]; then
+      info "Installing pnpm@$PNPM_SPEC as specified in frontend/package.json..."
+      corepack prepare "pnpm@$PNPM_SPEC" --activate
+    else
+      warn "No pnpm version pinned in frontend/package.json; installing Corepack-managed pnpm."
+      corepack prepare pnpm --activate
+    fi
   fi
 
   # uv
