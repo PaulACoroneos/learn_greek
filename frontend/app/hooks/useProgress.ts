@@ -38,12 +38,9 @@ function load(): ProgressData {
 }
 
 export function useProgress() {
-  const [progress, setProgress] = useState<ProgressData>(DEFAULT)
-
-  // Load after mount (SSR-safe)
-  useEffect(() => {
-    setProgress(load())
-  }, [])
+  const [progress, setProgress] = useState<ProgressData>(() =>
+    typeof window !== 'undefined' ? load() : DEFAULT
+  )
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
