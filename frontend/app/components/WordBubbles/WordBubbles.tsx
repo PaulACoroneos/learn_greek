@@ -124,8 +124,7 @@ export default function WordBubbles({
             <div className="space-y-1">
               <p className="font-semibold text-lg">❌ Not quite</p>
               <p className="text-sm">
-                Correct order:{' '}
-                <span className="font-medium">{correctWords.join(' ')}</span>
+                Correct order: <span className="font-medium">{correctWords.join(' ')}</span>
               </p>
             </div>
           )}

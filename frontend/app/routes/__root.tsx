@@ -1,4 +1,11 @@
-import { createRootRoute, Outlet, Link, useRouterState, HeadContent, Scripts } from '@tanstack/react-router'
+import {
+  createRootRoute,
+  Outlet,
+  Link,
+  useRouterState,
+  HeadContent,
+  Scripts,
+} from '@tanstack/react-router'
 import appCss from '../styles/app.css?url'
 
 const NAV = [

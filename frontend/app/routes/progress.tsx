@@ -6,39 +6,42 @@ export const Route = createFileRoute('/progress')({
   component: ProgressPage,
 })
 
-const LEVEL_DESCRIPTIONS: Record<
-  number,
-  { greek: string; description: string; canDo: string }
-> = {
+const LEVEL_DESCRIPTIONS: Record<number, { greek: string; description: string; canDo: string }> = {
   1: {
     greek: 'Επίπεδο Α1',
     description: 'Survival',
-    canDo: 'Understand and use familiar everyday expressions and basic phrases. Introduce yourself and ask about people you know.',
+    canDo:
+      'Understand and use familiar everyday expressions and basic phrases. Introduce yourself and ask about people you know.',
   },
   2: {
     greek: 'Επίπεδο Α2',
     description: 'Elementary',
-    canDo: 'Understand sentences on familiar topics (shopping, local area, employment). Communicate in simple, routine tasks requiring a direct exchange.',
+    canDo:
+      'Understand sentences on familiar topics (shopping, local area, employment). Communicate in simple, routine tasks requiring a direct exchange.',
   },
   3: {
     greek: 'Επίπεδο Β1',
     description: 'Intermediate (Threshold)',
-    canDo: 'Handle most situations likely to arise while travelling. Produce simple connected text on familiar topics. Describe experiences and events.',
+    canDo:
+      'Handle most situations likely to arise while travelling. Produce simple connected text on familiar topics. Describe experiences and events.',
   },
   4: {
     greek: 'Επίπεδο Β2',
     description: 'Upper-Intermediate (Vantage)',
-    canDo: 'Understand the main ideas of complex text on concrete and abstract topics. Interact with a degree of fluency and spontaneity with native speakers.',
+    canDo:
+      'Understand the main ideas of complex text on concrete and abstract topics. Interact with a degree of fluency and spontaneity with native speakers.',
   },
   5: {
     greek: 'Επίπεδο Γ1',
     description: 'Advanced',
-    canDo: 'Understand demanding, longer texts. Express ideas fluently and spontaneously. Use language flexibly and effectively for social, academic and professional purposes.',
+    canDo:
+      'Understand demanding, longer texts. Express ideas fluently and spontaneously. Use language flexibly and effectively for social, academic and professional purposes.',
   },
   6: {
     greek: 'Επίπεδο Γ2',
     description: 'Mastery',
-    canDo: 'Understand virtually everything heard or read. Summarise information from different spoken and written sources, expressing yourself spontaneously and precisely.',
+    canDo:
+      'Understand virtually everything heard or read. Summarise information from different spoken and written sources, expressing yourself spontaneously and precisely.',
   },
 }
 
@@ -54,7 +57,8 @@ function ProgressPage() {
   const mastered = wordStats.filter((w) => w.correct >= 2 && w.correct > w.incorrect)
   const struggling = wordStats.filter((w) => w.incorrect > w.correct && w.incorrect >= 1)
   const learning = wordStats.filter(
-    (w) => !mastered.find((m) => m.greek === w.greek) && !struggling.find((s) => s.greek === w.greek)
+    (w) =>
+      !mastered.find((m) => m.greek === w.greek) && !struggling.find((s) => s.greek === w.greek)
   )
 
   const levelInfo = LEVEL_INFO[progress.currentLevel]
@@ -85,7 +89,9 @@ function ProgressPage() {
         <div className="text-center py-16 bg-white rounded-2xl border border-blue-100 shadow-sm">
           <p className="text-4xl mb-4">📚</p>
           <h2 className="text-xl font-bold text-gray-700 mb-2">No data yet</h2>
-          <p className="text-gray-400 mb-6">Complete some practice exercises to see your progress here.</p>
+          <p className="text-gray-400 mb-6">
+            Complete some practice exercises to see your progress here.
+          </p>
           <Link
             to="/practice"
             className="px-6 py-2.5 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-colors"
@@ -180,7 +186,9 @@ function ProgressPage() {
                     <div className="h-2 bg-gray-100 rounded-full">
                       <div
                         className="h-2 bg-green-400 rounded-full transition-all"
-                        style={{ width: `${wordStats.length ? (mastered.length / wordStats.length) * 100 : 0}%` }}
+                        style={{
+                          width: `${wordStats.length ? (mastered.length / wordStats.length) * 100 : 0}%`,
+                        }}
                       />
                     </div>
                   </div>
@@ -195,7 +203,9 @@ function ProgressPage() {
                     <div className="h-2 bg-gray-100 rounded-full">
                       <div
                         className="h-2 bg-blue-300 rounded-full transition-all"
-                        style={{ width: `${wordStats.length ? (learning.length / wordStats.length) * 100 : 0}%` }}
+                        style={{
+                          width: `${wordStats.length ? (learning.length / wordStats.length) * 100 : 0}%`,
+                        }}
                       />
                     </div>
                   </div>
@@ -211,7 +221,9 @@ function ProgressPage() {
                       <div className="h-2 bg-gray-100 rounded-full">
                         <div
                           className="h-2 bg-red-300 rounded-full transition-all"
-                          style={{ width: `${wordStats.length ? (struggling.length / wordStats.length) * 100 : 0}%` }}
+                          style={{
+                            width: `${wordStats.length ? (struggling.length / wordStats.length) * 100 : 0}%`,
+                          }}
                         />
                       </div>
                     </div>

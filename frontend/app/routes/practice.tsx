@@ -179,9 +179,7 @@ function PracticePage() {
             {levelInfo.label} · {levelInfo.cefr}
           </span>
           {progress.currentLevel < 6 && (
-            <p className="text-xs text-gray-400 mt-1">
-              {toNextLevel} correct in a row to level up
-            </p>
+            <p className="text-xs text-gray-400 mt-1">{toNextLevel} correct in a row to level up</p>
           )}
         </div>
       </div>
