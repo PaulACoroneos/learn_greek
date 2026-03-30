@@ -45,20 +45,7 @@ export default function WordBubbles({
     const formed = sentence.map((w) => w.greek)
     const correct = formed.join(' ') === correctWords.join(' ')
     // words that are incorrect or not placed correctly (includes extra words)
-    const missedSet = new Set<string>()
-    const maxLen = Math.max(correctWords.length, formed.length)
-    for (let i = 0; i < maxLen; i++) {
-      const expected = correctWords[i]
-      const actual = formed[i]
-      if (expected === actual) continue
-      if (expected !== undefined) {
-        missedSet.add(expected)
-      }
-      if (actual !== undefined) {
-        missedSet.add(actual)
-      }
-    }
-    const missed = Array.from(missedSet)
+    const missed = correctWords.filter((w) => !formed.includes(w))
     setResult({ correct, missed })
     setSubmitted(true)
     onComplete(correct, missed)

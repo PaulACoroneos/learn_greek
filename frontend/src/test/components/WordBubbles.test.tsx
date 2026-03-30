@@ -29,14 +29,15 @@ describe('WordBubbles', () => {
     expect(screen.getByText('Γεια')).toBeInTheDocument()
   })
 
-  it('toggles selection on click', () => {
+  it('moves word to tray on click and returns it on tray click', () => {
     render(<WordBubbles {...PROPS} />)
-    const btn = screen.getByText('Καλημέρα')
-    expect(btn).toHaveAttribute('aria-pressed', 'false')
-    fireEvent.click(btn)
-    expect(btn).toHaveAttribute('aria-pressed', 'true')
-    fireEvent.click(btn)
-    expect(btn).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.getByText('Tap words below to build the sentence…')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('Καλημέρα'))
+    // word should now be in tray (placeholder gone)
+    expect(screen.queryByText('Tap words below to build the sentence…')).not.toBeInTheDocument()
+    // click tray word to return it
+    fireEvent.click(screen.getByText('Καλημέρα'))
+    expect(screen.getByText('Tap words below to build the sentence…')).toBeInTheDocument()
   })
 
   it('calls onComplete(true, []) for correct selection', () => {
@@ -69,13 +70,16 @@ describe('WordBubbles', () => {
 
   it('disables bubbles after submission', () => {
     render(<WordBubbles {...PROPS} />)
+    fireEvent.click(screen.getByText('Καλημέρα'))
     fireEvent.click(screen.getByRole('button', { name: 'Submit' }))
-    const bubble = screen.getAllByRole('button', { name: 'Καλημέρα' })[0]
-    expect(bubble).toBeDisabled()
+    // tray button should be disabled after submission
+    const trayBtn = screen.getByText('Καλημέρα').closest('button')
+    expect(trayBtn).toBeDisabled()
   })
 
   it('hides Submit button after submission', () => {
     render(<WordBubbles {...PROPS} />)
+    fireEvent.click(screen.getByText('Καλημέρα'))
     fireEvent.click(screen.getByRole('button', { name: 'Submit' }))
     expect(screen.queryByRole('button', { name: 'Submit' })).not.toBeInTheDocument()
   })
