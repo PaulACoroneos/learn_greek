@@ -19,6 +19,8 @@ export interface ProgressData {
 
 const STORAGE_KEY = 'learn-greek-progress'
 
+export const LEVEL_UP_THRESHOLD = 5
+
 const DEFAULT: ProgressData = {
   totalAnswered: 0,
   totalCorrect: 0,
@@ -70,7 +72,7 @@ export function useProgress() {
         const newConsecIncorrect = correct ? 0 : prev.consecutiveIncorrect + 1
 
         let newLevel = prev.currentLevel
-        const leveledUp = newConsecCorrect >= 3 && newLevel < 6
+        const leveledUp = newConsecCorrect >= 5 && newLevel < 6
         const leveledDown = newConsecIncorrect >= 2 && newLevel > 1
         if (leveledUp) newLevel += 1
         else if (leveledDown) newLevel -= 1

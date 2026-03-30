@@ -74,9 +74,21 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/conversation' | '/flashcards' | '/practice' | '/progress' | '/reading'
+  fullPaths:
+    | '/'
+    | '/conversation'
+    | '/flashcards'
+    | '/practice'
+    | '/progress'
+    | '/reading'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/conversation' | '/flashcards' | '/practice' | '/progress' | '/reading'
+  to:
+    | '/'
+    | '/conversation'
+    | '/flashcards'
+    | '/practice'
+    | '/progress'
+    | '/reading'
   id:
     | '__root__'
     | '/'
@@ -105,18 +117,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReadingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/practice': {
-      id: '/practice'
-      path: '/practice'
-      fullPath: '/practice'
-      preLoaderRoute: typeof PracticeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/progress': {
       id: '/progress'
       path: '/progress'
       fullPath: '/progress'
       preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/practice': {
+      id: '/practice'
+      path: '/practice'
+      fullPath: '/practice'
+      preLoaderRoute: typeof PracticeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/flashcards': {
