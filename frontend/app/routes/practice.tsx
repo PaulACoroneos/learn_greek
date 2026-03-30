@@ -72,7 +72,7 @@ function PracticePage() {
   const [ftScore, setFtScore] = useState({ correct: 0, total: 0 })
 
   const { addFlashcard } = useFlashcards()
-  const { progress, recordAnswer, hydrated } = useProgress()
+  const { progress, recordAnswer } = useProgress()
 
   const levelInfo = LEVEL_INFO[progress.currentLevel]
 
@@ -111,14 +111,15 @@ function PracticePage() {
     }
   }
 
-  // Load first exercise once progress hydrates from localStorage
+  // Load first exercise once on mount — progress.currentLevel is already correct
+  // because useProgress lazy-initializes state from localStorage synchronously.
   const initialLoadDone = useRef(false)
   useEffect(() => {
-    if (mode === 'word-bubbles' && !initialLoadDone.current && hydrated) {
+    if (mode === 'word-bubbles' && !initialLoadDone.current) {
       initialLoadDone.current = true
       loadExercise(progress.currentLevel, [])
     }
-  }, [hydrated]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   function onWBComplete(correct: boolean, missed: string[]) {
     recordAnswer(correct, exercise?.correctWords ?? [])

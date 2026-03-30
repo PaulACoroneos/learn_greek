@@ -41,17 +41,10 @@ export function useProgress() {
   const [progress, setProgress] = useState<ProgressData>(() =>
     typeof window !== 'undefined' ? load() : DEFAULT
   )
-  const [hydrated, setHydrated] = useState(false)
 
   useEffect(() => {
-    setHydrated(true)
-  }, [])
-
-  useEffect(() => {
-    if (hydrated) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
-    }
-  }, [progress, hydrated])
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
+  }, [progress])
 
   const recordAnswer = useCallback(
     (correct: boolean, words: { greek: string; english: string }[]) => {
@@ -98,5 +91,5 @@ export function useProgress() {
 
   const resetProgress = useCallback(() => setProgress(DEFAULT), [])
 
-  return { progress, recordAnswer, resetProgress, hydrated }
+  return { progress, recordAnswer, resetProgress }
 }
