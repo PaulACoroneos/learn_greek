@@ -27,7 +27,29 @@ const LEVEL_DESCRIPTIONS: Record<number, string> = {
 }
 
 export const generateWordBubbleExercise = createServerFn({ method: 'POST' })
-  .inputValidator((data: GenerateExerciseInput) => data)
+  .inputValidator((data: GenerateExerciseInput) => {
+    if (
+      typeof data.level !== 'number' ||
+      !Number.isInteger(data.level) ||
+      data.level < 1 ||
+      data.level > 6
+    ) {
+      throw new Error('level must be an integer between 1 and 6')
+    }
+    if (!Array.isArray(data.recentlyMissed)) {
+      throw new Error('recentlyMissed must be an array')
+    }
+    if (data.recentlyMissed.length > 10) {
+      throw new Error('recentlyMissed must contain at most 10 items')
+    }
+    const sanitizedMissed = data.recentlyMissed.map((w) => {
+      if (typeof w !== 'string') throw new Error('each recentlyMissed item must be a string')
+      if (w.length > 100) throw new Error('recentlyMissed item exceeds maximum length')
+      // Strip characters that are not Greek letters, Latin letters, spaces, or common punctuation
+      return w.replace(/[^\p{L}\p{M}\s'-]/gu, '').trim()
+    })
+    return { level: data.level, recentlyMissed: sanitizedMissed }
+  })
   .handler(async ({ data }) => {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
@@ -65,7 +87,11 @@ Respond ONLY with valid JSON – no markdown, no extra keys:
       ],
     })
 
-    const raw = response.content[0].type === 'text' ? response.content[0].text.trim() : ''
+    const firstContent = response.content[0]
+    if (!firstContent || firstContent.type !== 'text') {
+      throw new Error('Unexpected or empty response from AI')
+    }
+    const raw = firstContent.text.trim()
     const cleaned = raw.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '')
     try {
       return JSON.parse(cleaned) as ExerciseData
