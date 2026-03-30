@@ -18,9 +18,21 @@ interface GenerateExerciseInput {
 }
 
 const TOPICS = [
-  'café', 'weather', 'family', 'shopping', 'travel', 'sport',
-  'school', 'food', 'home', 'transport', 'health', 'work',
-  'hobbies', 'nature', 'celebrations',
+  'café',
+  'weather',
+  'family',
+  'shopping',
+  'travel',
+  'sport',
+  'school',
+  'food',
+  'home',
+  'transport',
+  'health',
+  'work',
+  'hobbies',
+  'nature',
+  'celebrations',
 ]
 
 const LEVEL_DESCRIPTIONS: Record<number, string> = {
