@@ -57,8 +57,12 @@ Respond ONLY with valid JSON in exactly this format, no extra keys:
         },
       ],
     })
-    const raw = response.content[0].type === 'text' ? response.content[0].text : ''
-    const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim()
+    const firstContent = response.content[0]
+    if (!firstContent || firstContent.type !== 'text') {
+      throw new Error('Unexpected or empty response from AI')
+    }
+    const raw = firstContent.text.trim()
+    const cleaned = raw.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '')
     try {
       return JSON.parse(cleaned) as PassageData
     } catch {
@@ -91,8 +95,12 @@ Respond ONLY with valid JSON: {"explanation": "...", "grammarNote": "..."}`,
         },
       ],
     })
-    const raw = response.content[0].type === 'text' ? response.content[0].text : ''
-    const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim()
+    const firstContent = response.content[0]
+    if (!firstContent || firstContent.type !== 'text') {
+      throw new Error('Unexpected or empty response from AI')
+    }
+    const raw = firstContent.text.trim()
+    const cleaned = raw.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '')
     try {
       return JSON.parse(cleaned) as WordExplanation
     } catch {
