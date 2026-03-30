@@ -17,6 +17,12 @@ interface GenerateExerciseInput {
   recentlyMissed: string[]
 }
 
+const TOPICS = [
+  'café', 'weather', 'family', 'shopping', 'travel', 'sport',
+  'school', 'food', 'home', 'transport', 'health', 'work',
+  'hobbies', 'nature', 'celebrations',
+]
+
 const LEVEL_DESCRIPTIONS: Record<number, string> = {
   1: 'A1 – Survival: single common words only – greetings (Καλημέρα, Γεια), numbers, colors, family members. 1–2 correct word bubbles.',
   2: 'A2 – Elementary: simple present-tense phrases – I want/have/am, food, weather. 2–3 correct word bubbles.',
@@ -82,7 +88,7 @@ Respond ONLY with valid JSON – no markdown, no extra keys:
       messages: [
         {
           role: 'user',
-          content: `Generate a level ${data.level} word-bubble exercise on a fresh topic.`,
+          content: `Generate a level ${data.level} word-bubble exercise. Topic: ${TOPICS[Math.floor(Math.random() * TOPICS.length)]}. Request ID: ${Math.random().toString(36).slice(2)}.`,
         },
       ],
     })

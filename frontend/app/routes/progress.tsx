@@ -63,7 +63,7 @@ function ProgressPage() {
 
   const levelInfo = LEVEL_INFO[progress.currentLevel]
   const levelDesc = LEVEL_DESCRIPTIONS[progress.currentLevel]
-  const toNextLevel = Math.max(0, 3 - progress.consecutiveCorrect)
+  const toNextLevel = Math.max(0, 5 - progress.consecutiveCorrect)
 
   return (
     <div className="space-y-8 max-w-2xl mx-auto">

@@ -80,8 +80,30 @@ install_deps() {
   (cd "$BACKEND" && uv sync --all-groups)
 }
 
+# ── postgres ──────────────────────────────────────────────────────────────────
+POSTGRES_STARTED=false
+
+start_postgres() {
+  if systemctl is-active --quiet postgresql; then
+    info "PostgreSQL already running."
+  else
+    info "Starting PostgreSQL..."
+    sudo systemctl start postgresql
+    POSTGRES_STARTED=true
+  fi
+}
+
+stop_postgres() {
+  if [ "$POSTGRES_STARTED" = true ]; then
+    info "Stopping PostgreSQL..."
+    sudo systemctl stop postgresql
+  fi
+}
+
 # ── run ───────────────────────────────────────────────────────────────────────
 run_services() {
+  start_postgres
+
   info "Starting backend on http://localhost:8000 ..."
   (cd "$BACKEND" && uv run uvicorn main:app --reload --port 8000) &
   BACKEND_PID=$!
@@ -91,7 +113,7 @@ run_services() {
   FRONTEND_PID=$!
 
   # ── cleanup on exit ──────────────────────────────────────────────────────
-  trap 'info "Shutting down..."; kill $BACKEND_PID $FRONTEND_PID 2>/dev/null; exit 0' INT TERM
+  trap 'info "Shutting down..."; kill $BACKEND_PID $FRONTEND_PID 2>/dev/null; stop_postgres; exit 0' INT TERM
 
   wait $BACKEND_PID $FRONTEND_PID
 }

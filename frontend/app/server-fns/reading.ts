@@ -36,7 +36,10 @@ export const generateReadingPassage = createServerFn({ method: 'POST' })
     const response = await client.messages.create({
       model: 'claude-opus-4-5',
       max_tokens: 512,
-      system: `You are a Modern Greek language teacher creating reading passages for learners.
+      system: [
+        {
+          type: 'text',
+          text: `You are a Modern Greek language teacher creating reading passages for learners.
 Generate a short, natural Modern Greek passage at the requested level.
 Respond ONLY with valid JSON in exactly this format, no extra keys:
 {
@@ -44,6 +47,9 @@ Respond ONLY with valid JSON in exactly this format, no extra keys:
   "greekText": "The complete Greek passage as a single string",
   "englishSummary": "1-2 sentence English summary"
 }`,
+          cache_control: { type: 'ephemeral' },
+        },
+      ],
       messages: [
         {
           role: 'user',
@@ -52,8 +58,9 @@ Respond ONLY with valid JSON in exactly this format, no extra keys:
       ],
     })
     const raw = response.content[0].type === 'text' ? response.content[0].text : ''
+    const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim()
     try {
-      return JSON.parse(raw) as PassageData
+      return JSON.parse(cleaned) as PassageData
     } catch {
       throw new Error('Failed to parse passage data from AI response')
     }
@@ -66,11 +73,17 @@ export const explainWordInContext = createServerFn({ method: 'POST' })
     const response = await client.messages.create({
       model: 'claude-opus-4-5',
       max_tokens: 256,
-      system: `You are a Modern Greek teacher explaining vocabulary in context.
+      system: [
+        {
+          type: 'text',
+          text: `You are a Modern Greek teacher explaining vocabulary in context.
 Given a Greek word and the passage it appears in, provide:
 1. What the word means in THIS specific context (not just a dictionary gloss)
 2. A brief grammar note (case, verb form, tense, etc.) if useful
 Respond ONLY with valid JSON: {"explanation": "...", "grammarNote": "..."}`,
+          cache_control: { type: 'ephemeral' },
+        },
+      ],
       messages: [
         {
           role: 'user',
@@ -79,8 +92,9 @@ Respond ONLY with valid JSON: {"explanation": "...", "grammarNote": "..."}`,
       ],
     })
     const raw = response.content[0].type === 'text' ? response.content[0].text : ''
+    const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim()
     try {
-      return JSON.parse(raw) as WordExplanation
+      return JSON.parse(cleaned) as WordExplanation
     } catch {
       throw new Error('Failed to parse word explanation from AI response')
     }

@@ -53,7 +53,7 @@ export const sendChatMessage = createServerFn({ method: 'POST' })
     const response = await client.messages.create({
       model: 'claude-opus-4-5',
       max_tokens: 1024,
-      system: systemPrompt,
+      system: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }],
       messages: data.messages,
     })
     const block = response.content[0]
