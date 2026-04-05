@@ -44,9 +44,12 @@ export default function Flashcards({ flashcards, onRemove, onMarkReviewed, onCle
         <div
           className="bg-white rounded-2xl shadow-md border border-blue-100 p-10 text-center cursor-pointer select-none min-h-52 flex flex-col justify-center"
           onClick={() => setFlipped((f) => !f)}
-          onKeyDown={(e) =>
-            e.key === 'Enter' || e.key === ' ' ? setFlipped((f) => !f) : undefined
-          }
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              setFlipped((f) => !f)
+            }
+          }}
           role="button"
           tabIndex={0}
           aria-label={flipped ? 'Show Greek' : 'Show English translation'}
