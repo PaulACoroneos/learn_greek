@@ -328,7 +328,7 @@ function ReadingPage() {
 
           {/* instruction */}
           <p className="text-sm text-gray-500">
-            Tap a word you don't know — Claude will explain it in context.
+            Tap a word you don&apos;t know — Claude will explain it in context.
           </p>
 
           {/* passage */}
@@ -374,7 +374,7 @@ function ReadingPage() {
             onClick={startComprehension}
             className="w-full py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors"
           >
-            🎓 I've finished reading — ask me about it
+            🎓 I&apos;ve finished reading — ask me about it
           </button>
 
           {/* word explanation popup */}

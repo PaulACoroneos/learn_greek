@@ -175,7 +175,7 @@ export default function Conversation({ onAddFlashcard }: Props) {
           }}
           className="text-xs text-blue-500 hover:underline"
         >
-          💬 Try: "{next.english}"
+          💬 Try: &quot;{next.english}&quot;
         </button>
         <form onSubmit={send} className="flex gap-2">
           <input
