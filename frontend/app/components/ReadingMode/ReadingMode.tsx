@@ -32,7 +32,7 @@ export default function ReadingMode({ title, words, onAddFlashcard }: Props) {
     <div className="space-y-5 relative">
       <h2 className="text-xl font-bold text-gray-800">{title}</h2>
       <p className="text-sm text-gray-500">
-        Click any word you don't know to define it or add it to flashcards.
+        Click any word you don&apos;t know to define it or add it to flashcards.
       </p>
 
       <div className="bg-white rounded-xl p-6 shadow-sm border border-blue-100 leading-loose text-xl">
