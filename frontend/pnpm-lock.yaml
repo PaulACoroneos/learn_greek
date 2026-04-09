@@ -34,7 +34,7 @@ importers:
         specifier: ^9.39.4
         version: 9.39.4
       '@eslint/mcp':
-        specifier: ^0.3.4
+        specifier: 0.3.4
         version: 0.3.4(jiti@2.6.1)
       '@tailwindcss/vite':
         specifier: ^4.2.2
