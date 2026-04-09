@@ -1,0 +1,10 @@
+{
+  "servers": {
+    "ESLint": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["@eslint/mcp@latest"],
+      "cwd": "${workspaceFolder}/frontend"
+    }
+  }
+}
